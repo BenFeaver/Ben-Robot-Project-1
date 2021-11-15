@@ -6,31 +6,39 @@ using UnityEngine.UI;
 public class ArmSnap : MonoBehaviour
 {
     public GameObject SnapLocation;
-    public bool isSnapped;
     private bool objectSnapped;
     private bool beingDragged;
 
+    //Saves original arm position for being snapped
     private Vector3 shoulderPosition;
 
+    //Keeps track of which text is associated with each object
     public Text changeText;
     
     private void Start()
     {
         shoulderPosition = gameObject.transform.position;
     }
+
+
     private void FixedUpdate()
     {
         beingDragged = GetComponent<ArmPulloff>().beingDragged;
         objectSnapped = SnapLocation.GetComponent<ArmSnapLocation>().Snapped;
-        if (objectSnapped == true && beingDragged == false)
-        {
-            GetComponent<Rigidbody>().isKinematic = true;
-            transform.position = shoulderPosition;
-           
-        }
+        Snap();
         ChangeText();
     }
 
+    //Snaps arm position
+    private void Snap()
+    {
+        if (objectSnapped == true && beingDragged == false)
+        {
+            transform.position = shoulderPosition;
+        }
+    }
+
+    //Changes associated text
     private void ChangeText()
     {
         if(objectSnapped == false)

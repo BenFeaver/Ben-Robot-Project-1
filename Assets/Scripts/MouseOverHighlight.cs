@@ -34,7 +34,7 @@ public class MouseOverHighlight : MonoBehaviour
     private void HighlightArm()
     {
         /*Function checks to see if the object tag matches the object being hovered over, then
-         sets the object Material color to highlight it*/
+         sets the object Material color to highlight it. Highlights all objects with that tag*/
         if (isArmHighlighted == true && gameObject.CompareTag(tagCheck))
         { robotMat.color = highlightColor; }
         else robotMat.color = startingColor;

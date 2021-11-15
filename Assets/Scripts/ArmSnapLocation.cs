@@ -4,12 +4,15 @@ using UnityEngine;
 
 public class ArmSnapLocation : MonoBehaviour
 {
-    private bool inDragState;
+    //Retrieve drag state
+    private bool beingDragged;
+
+    //Variables to determine whether the arm should snap into place or not
     private bool insideSnapZone;
     public bool Snapped;
     public GameObject Arm;
-    //public GameObject SnapRotation;
-
+    
+    //Determines if the Arm is within the shoulder sphere colliders
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.name == Arm.name)
@@ -25,9 +28,10 @@ public class ArmSnapLocation : MonoBehaviour
         }
     }
 
+    //Sets snap state if in the specified zone and also not being dragged
     void SnapToShoulder()
     {
-        if (inDragState == false && insideSnapZone == true)
+        if (beingDragged == false && insideSnapZone == true)
         {
             Snapped = true;
         }
@@ -35,9 +39,10 @@ public class ArmSnapLocation : MonoBehaviour
             Snapped = false;
     }
 
+    //Sets Drag state and runs the Snap check
     private void Update()
     {
-        inDragState = Arm.GetComponent<ArmPulloff>().beingDragged;
+        beingDragged = Arm.GetComponent<ArmPulloff>().beingDragged;
         SnapToShoulder();
     }
 }
